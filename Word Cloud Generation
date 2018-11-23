@@ -1,0 +1,30 @@
+import numpy as np
+from PIL import Image
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud, STOPWORDS
+%matplotlib inline
+
+sent = ["India is a beautiful country and famous all over the world for its unique cultures and traditions",
+       "It is famous for its historical heritages and monuments",
+       "India is a country where people speak many languages and people of different castes, creeds, religions and cultures live together",
+       " That’s why India is famous for common saying of “unity in diversity",
+       "t is well known as the land of spirituality, philosophy, science and technology",
+       "It is famous country for its agriculture and farming which are the backbones of it from the ancient time",
+       "It is a famous tourist’s paradise because it attracts people’s mind from all over the world",
+       "It is rich in monuments, tombs, churches, historical buildings, temples, museums, scenic beauty, wild life sanctuaries, places of architecture, etc"]
+
+mask = np.array(Image.open("India2.png"))
+def wordcloud(tweets, title):
+    stopwords = set(STOPWORDS)
+    stopwords.add("will")
+    stopwords.add("now")
+    wordcloud = WordCloud(width=512, height=512, background_color="black", max_font_size=18, min_font_size=4,
+                          max_words=200, stopwords=stopwords, colormap='Dark2',
+                          random_state=2018, mask=mask).generate(" ".join([i for i in sent]))
+    plt.figure(title, figsize=(20, 10), facecolor='white', edgecolor='blue')
+    plt.imshow(wordcloud, interpolation="bilinear")
+    plt.axis("off")
+    plt.title(title)
+    plt.tight_layout(pad=0)
+    plt.show()
+wordcloud(sent, "India")
